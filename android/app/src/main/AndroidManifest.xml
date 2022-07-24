@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.codex">
+    package="com.sushant.codex">
    <application
         android:label="codex"
         android:name="${applicationName}"
