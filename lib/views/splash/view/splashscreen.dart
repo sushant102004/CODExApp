@@ -1,4 +1,5 @@
 import 'package:codex/views/splash/controller/splashcontroller.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -43,7 +44,8 @@ class SplashScreen extends StatelessWidget {
                 padding: EdgeInsets.only(top: _size.height / 3),
                 child: InkWell(
                   onTap: () {
-                    splashScreenController.goToAuthentication();
+                    splashScreenController
+                        .setScreen(FirebaseAuth.instance.currentUser);
                   },
                   child: Container(
                     width: _size.width / 2.5,
