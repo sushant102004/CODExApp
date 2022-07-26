@@ -1,10 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:codex/views/home/views/homepage.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class RegisterController extends GetxController {
-  final GlobalKey<FormState> registerFormKey = GlobalKey<FormState>();
+  GlobalKey<FormState> registerFormKey = GlobalKey<FormState>();
   final FirebaseAuth auth = FirebaseAuth.instance;
   final FirebaseFirestore firestore = FirebaseFirestore.instance;
 
@@ -12,14 +13,14 @@ class RegisterController extends GetxController {
       emailController,
       passwordController,
       rollNoController,
-      batchController,
+      phoneController,
       streamController;
 
   var name = '';
   var email = '';
   var password = '';
   var rollNo = '';
-  var batch = '';
+  var phone = '';
   var stream = '';
 
   @override
@@ -29,7 +30,7 @@ class RegisterController extends GetxController {
     emailController = TextEditingController();
     passwordController = TextEditingController();
     rollNoController = TextEditingController();
-    batchController = TextEditingController();
+    phoneController = TextEditingController();
     streamController = TextEditingController();
   }
 
@@ -61,7 +62,7 @@ class RegisterController extends GetxController {
     return null;
   }
 
-  String? validateBatch(String value) {
+  String? validatePhone(String value) {
     if (value.isEmpty) {
       return 'Please Enter Your Batch';
     }
@@ -86,8 +87,8 @@ class RegisterController extends GetxController {
       // ignore: unused_local_variable
       final credential = await FirebaseAuth.instance
           .createUserWithEmailAndPassword(email: email, password: password);
-      addDataToDB(name, email, rollNo, batch, stream);
-      Get.toNamed('/home');
+      addDataToDB(name, email, rollNo, phone, stream);
+      Get.off(const HomePage());
     } on FirebaseException catch (e) {
       if (e.code == 'weak-password') {
         return Get.snackbar(
@@ -119,7 +120,7 @@ class RegisterController extends GetxController {
     }
   }
 
-  addDataToDB(String name, email, rollNo, batch, stream) async {
+  addDataToDB(String name, email, rollNo, phone, stream) async {
     final User user = auth.currentUser!;
     firestore
         .collection('users')
@@ -129,7 +130,7 @@ class RegisterController extends GetxController {
           'name': name,
           'email': email,
           'rollNo': rollNo,
-          'batch': batch,
+          'phone': phone,
           'stream': stream,
         })
         .then((value) => print('User Created & Data Added To DB'))
@@ -143,7 +144,7 @@ class RegisterController extends GetxController {
     emailController.dispose();
     passwordController.dispose();
     rollNoController.dispose();
-    batchController.dispose();
+    phoneController.dispose();
     streamController.dispose();
   }
 }

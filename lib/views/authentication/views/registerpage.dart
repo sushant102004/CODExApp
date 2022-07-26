@@ -25,14 +25,6 @@ class _AuthenticationScreenState extends State<AuthenticationScreen> {
               color: Colors.black, fontSize: 23, fontWeight: FontWeight.bold),
         ),
         centerTitle: true,
-        leading: IconButton(
-            onPressed: () {
-              Navigator.pop(context);
-            },
-            icon: const Icon(
-              Icons.arrow_back_ios_new,
-              color: Colors.black,
-            )),
       ),
       body: SingleChildScrollView(
         scrollDirection: Axis.vertical,
@@ -100,14 +92,14 @@ class _AuthenticationScreenState extends State<AuthenticationScreen> {
                         Expanded(
                           child: HeadingAndInputField(
                             size: _size,
-                            textController: registerController.batchController,
-                            heading: 'Batch',
-                            hintText: 'eg: 2021 - 2025',
+                            textController: registerController.phoneController,
+                            heading: 'Phone No',
+                            hintText: 'eg: XXXXXXXXXX',
                             onSaved: (value) {
-                              registerController.batch = value!;
+                              registerController.phone = value!;
                             },
                             validate: (value) {
-                              return registerController.validateBatch(value!);
+                              return registerController.validatePhone(value!);
                             },
                           ),
                         ),

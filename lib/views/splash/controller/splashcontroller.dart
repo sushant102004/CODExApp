@@ -1,17 +1,14 @@
+import 'package:codex/views/authentication/views/registerpage.dart';
+import 'package:codex/views/home/views/homepage.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
 
 class SplashController {
-  goToAuthentication() {
-    printInfo(info: 'Navigated');
-    Get.toNamed('/register');
-  }
-
   setScreen(User? user) {
     if (user == null) {
-      Get.toNamed('/register');
+      Get.off(const AuthenticationScreen());
     } else {
-      Get.toNamed('/home');
+      Get.off(const HomePage());
     }
   }
 }

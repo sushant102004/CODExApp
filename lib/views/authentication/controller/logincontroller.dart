@@ -1,9 +1,10 @@
+import 'package:codex/views/home/views/homepage.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class LoginController extends GetxController {
-  final GlobalKey<FormState> loginKey = GlobalKey<FormState>();
+  GlobalKey<FormState> loginKey = GlobalKey<FormState>();
   late TextEditingController emailController, passwordController;
 
   var email = '';
@@ -42,7 +43,7 @@ class LoginController extends GetxController {
       final credential = await FirebaseAuth.instance
           .signInWithEmailAndPassword(email: email, password: password);
 
-      Get.toNamed('/home');
+      Get.off(const HomePage());
     } on FirebaseException catch (e) {
       if (e.code == 'user-not-found') {
         return Get.snackbar('Something Went Wrong', 'Your Are Not Registered',

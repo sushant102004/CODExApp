@@ -1,4 +1,5 @@
 import 'package:codex/views/authentication/controller/logincontroller.dart';
+import 'package:codex/views/authentication/views/registerpage.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -21,7 +22,7 @@ class LoginPage extends StatelessWidget {
         centerTitle: true,
         leading: IconButton(
             onPressed: () {
-              Navigator.pop(context);
+              Get.off(const AuthenticationScreen());
             },
             icon: const Icon(
               Icons.arrow_back_ios_new,
