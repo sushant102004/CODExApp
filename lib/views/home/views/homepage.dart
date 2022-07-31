@@ -1,3 +1,4 @@
+import 'package:codex/admin/views/adminlogin.dart';
 import 'package:codex/views/home/controllers/homecontroller.dart';
 import 'package:codex/views/home/views/upcomingevents.dart';
 import 'package:flutter/material.dart';
@@ -54,10 +55,15 @@ class _HomePageState extends State<HomePage> {
             ),
             Padding(
               padding: EdgeInsets.only(top: _size.height / 1.63),
-              child: const Text(
-                'Login As Admin',
-                textAlign: TextAlign.center,
-                style: TextStyle(color: Colors.blueAccent),
+              child: InkWell(
+                onTap: () {
+                  Get.to(const AdminLogin());
+                },
+                child: const Text(
+                  'Login As Admin',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(color: Colors.blueAccent),
+                ),
               ),
             )
           ],
