@@ -2,7 +2,33 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
 class UpcomingEventDetail extends StatefulWidget {
-  const UpcomingEventDetail({Key? key}) : super(key: key);
+  UpcomingEventDetail(
+      {Key? key,
+      required this.eventName,
+      required this.date,
+      required this.description,
+      required this.image,
+      required this.intro,
+      required this.isPastEvent,
+      required this.location,
+      required this.registerLink,
+      required this.teamSize,
+      required this.timing,
+      required this.contactNumberOne,
+      required this.contactNumberTwo})
+      : super(key: key);
+  String eventName;
+  String image;
+  String intro;
+  String description;
+  String date;
+  String timing;
+  bool isPastEvent;
+  String location;
+  String registerLink;
+  String teamSize;
+  String contactNumberOne;
+  String contactNumberTwo;
 
   @override
   State<UpcomingEventDetail> createState() => _UpcomingEventDetailState();
@@ -18,9 +44,9 @@ class _UpcomingEventDetailState extends State<UpcomingEventDetail> {
           elevation: 0,
           iconTheme: const IconThemeData(color: Colors.black),
           centerTitle: true,
-          title: const Text(
-            'War of Profit',
-            style: TextStyle(
+          title: Text(
+            widget.eventName,
+            style: const TextStyle(
                 fontSize: 23, fontWeight: FontWeight.bold, color: Colors.black),
           ),
         ),
@@ -39,8 +65,7 @@ class _UpcomingEventDetailState extends State<UpcomingEventDetail> {
                       ClipRRect(
                         borderRadius: BorderRadius.circular(6),
                         child: CachedNetworkImage(
-                          imageUrl:
-                              'https://scontent.fixc9-1.fna.fbcdn.net/v/t39.30808-6/278335801_5267193973346148_6227743137210123156_n.jpg?_nc_cat=100&ccb=1-7&_nc_sid=340051&_nc_ohc=OGsVLdUIAVwAX_LasOM&_nc_ht=scontent.fixc9-1.fna&oh=00_AT80EM3OIpscoYFA_iOFaBTBi_N7sANKYsRYmOnWGN_UBA&oe=62E40116',
+                          imageUrl: widget.image,
                           placeholder: (context, url) =>
                               const CircularProgressIndicator(),
                           errorWidget: (context, url, error) =>
@@ -51,10 +76,10 @@ class _UpcomingEventDetailState extends State<UpcomingEventDetail> {
                         padding: EdgeInsets.all(_size.width / 100),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.start,
-                          children: const [
+                          children: [
                             Text(
-                              'War of Profit',
-                              style: TextStyle(
+                              widget.eventName,
+                              style: const TextStyle(
                                   fontSize: 30, fontWeight: FontWeight.bold),
                             ),
                           ],
@@ -62,24 +87,24 @@ class _UpcomingEventDetailState extends State<UpcomingEventDetail> {
                       ),
                       Padding(
                         padding: EdgeInsets.all(_size.width / 100),
-                        child: const Text(
-                          '''Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.''',
-                          style: TextStyle(fontSize: 15),
+                        child: Text(
+                          widget.description,
+                          style: const TextStyle(fontSize: 15),
                         ),
                       ),
                       Padding(
                         padding: EdgeInsets.all(_size.width / 100),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.start,
-                          children: const [
-                            Text(
+                          children: [
+                            const Text(
                               'Team Size: - ',
                               style: TextStyle(
                                   fontSize: 23, fontWeight: FontWeight.bold),
                             ),
                             Text(
-                              '2',
-                              style: TextStyle(fontSize: 18),
+                              widget.teamSize,
+                              style: const TextStyle(fontSize: 18),
                             ),
                           ],
                         ),
@@ -88,15 +113,15 @@ class _UpcomingEventDetailState extends State<UpcomingEventDetail> {
                         padding: EdgeInsets.all(_size.width / 100),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.start,
-                          children: const [
-                            Text(
+                          children: [
+                            const Text(
                               'Date: - ',
                               style: TextStyle(
                                   fontSize: 23, fontWeight: FontWeight.bold),
                             ),
                             Text(
-                              '30 July 2022',
-                              style: TextStyle(fontSize: 18),
+                              widget.date,
+                              style: const TextStyle(fontSize: 18),
                             ),
                           ],
                         ),
@@ -105,15 +130,15 @@ class _UpcomingEventDetailState extends State<UpcomingEventDetail> {
                         padding: EdgeInsets.all(_size.width / 100),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.start,
-                          children: const [
-                            Text(
+                          children: [
+                            const Text(
                               'Timing: - ',
                               style: TextStyle(
                                   fontSize: 23, fontWeight: FontWeight.bold),
                             ),
                             Text(
-                              '10 AM - 12 PM',
-                              style: TextStyle(fontSize: 18),
+                              widget.timing,
+                              style: const TextStyle(fontSize: 18),
                             ),
                           ],
                         ),
@@ -122,15 +147,15 @@ class _UpcomingEventDetailState extends State<UpcomingEventDetail> {
                         padding: EdgeInsets.all(_size.width / 100),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.start,
-                          children: const [
-                            Text(
+                          children: [
+                            const Text(
                               'Location: - ',
                               style: TextStyle(
                                   fontSize: 23, fontWeight: FontWeight.bold),
                             ),
                             Text(
-                              'Lab 175, Old Engg. Block',
-                              style: TextStyle(fontSize: 18),
+                              widget.location,
+                              style: const TextStyle(fontSize: 18),
                             ),
                           ],
                         ),
