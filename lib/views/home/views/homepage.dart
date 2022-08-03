@@ -1,3 +1,4 @@
+import 'package:codex/admin/controllers/admincontroller.dart';
 import 'package:codex/admin/views/adminlogin.dart';
 import 'package:codex/views/home/controllers/homecontroller.dart';
 import 'package:codex/views/home/views/upcomingevents.dart';
