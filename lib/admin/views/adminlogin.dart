@@ -1,4 +1,4 @@
-import 'package:codex/admin/controllers/adminlogincontroller.dart';
+import 'package:codex/admin/controllers/admincontroller.dart';
 import 'package:codex/views/home/views/homepage.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -9,7 +9,7 @@ class AdminLogin extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final _size = MediaQuery.of(context).size;
-    final adminLoginController = Get.put(AdminLoginController());
+    final adminController = Get.put(AdminController());
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.grey.shade100,
@@ -40,13 +40,13 @@ class AdminLogin extends StatelessWidget {
               children: [
                 HeadingAndInputField(
                   size: _size,
-                  textController: adminLoginController.adminEmailController,
+                  textController: adminController.adminEmailController,
                   heading: 'Email',
                   hintText: 'eg: Email',
                 ),
                 HeadingAndInputField(
                   size: _size,
-                  textController: adminLoginController.adminPasswordController,
+                  textController: adminController.adminPasswordController,
                   heading: 'Password',
                   hintText: 'eg: aStrongPassword',
                 ),
@@ -54,7 +54,7 @@ class AdminLogin extends StatelessWidget {
                   padding: EdgeInsets.only(top: _size.height / 30),
                   child: InkWell(
                     onTap: () {
-                      adminLoginController.adminLogin();
+                      adminController.adminLogin();
                     },
                     child: Container(
                       width: _size.width / 2.2,
