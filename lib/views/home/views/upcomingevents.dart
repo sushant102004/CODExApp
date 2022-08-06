@@ -40,6 +40,7 @@ class _UpcomingEventsState extends State<UpcomingEvents> {
                   timing: doc['timing'],
                   contactNumberOne: doc['contactNumberOne'],
                   contactNumberTwo: doc['contactNumberTwo'],
+                  ldor: doc['ldor'],
                 );
               },
             );
@@ -68,7 +69,8 @@ class UpcomingEventWidget extends StatelessWidget {
       required this.teamSize,
       required this.timing,
       required this.contactNumberOne,
-      required this.contactNumberTwo})
+      required this.contactNumberTwo,
+      required this.ldor})
       : _size = size,
         super(key: key);
 
@@ -85,6 +87,7 @@ class UpcomingEventWidget extends StatelessWidget {
   String teamSize;
   String contactNumberOne;
   String contactNumberTwo;
+  String ldor;
 
   @override
   Widget build(BuildContext context) {
@@ -95,11 +98,11 @@ class UpcomingEventWidget extends StatelessWidget {
           top: _size.height / 120),
       child: Column(
         children: [
-          Container(
+          SizedBox(
             width: _size.width,
-            decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(6),
-                border: Border.all(color: Colors.grey.shade400)),
+            // decoration: BoxDecoration(
+            //     borderRadius: BorderRadius.circular(6),
+            //     border: Border.all(color: Colors.grey.shade400)),
             child: Column(
               children: [
                 ClipRRect(
@@ -107,18 +110,20 @@ class UpcomingEventWidget extends StatelessWidget {
                   child: InkWell(
                     onTap: () {
                       Get.to(UpcomingEventDetail(
-                          eventName: eventName,
-                          date: date,
-                          description: description,
-                          image: image,
-                          intro: intro,
-                          isPastEvent: isPastEvent,
-                          location: location,
-                          registerLink: registerLink,
-                          teamSize: teamSize,
-                          timing: timing,
-                          contactNumberOne: contactNumberOne,
-                          contactNumberTwo: contactNumberTwo));
+                        eventName: eventName,
+                        date: date,
+                        description: description,
+                        image: image,
+                        intro: intro,
+                        isPastEvent: isPastEvent,
+                        location: location,
+                        registerLink: registerLink,
+                        teamSize: teamSize,
+                        timing: timing,
+                        contactNumberOne: contactNumberOne,
+                        contactNumberTwo: contactNumberTwo,
+                        ldor: ldor,
+                      ));
                     },
                     child: CachedNetworkImage(
                       imageUrl: image,
@@ -152,20 +157,37 @@ class UpcomingEventWidget extends StatelessWidget {
                 Padding(
                   padding: EdgeInsets.all(_size.width / 100),
                   child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text(
-                        'Date: ' +
-                            date +
-                            ' | '
-                                ' ' +
-                            'Time: ' +
-                            timing,
-                        style: const TextStyle(fontSize: 15),
+                      Container(
+                        decoration: BoxDecoration(
+                            color: Colors.blueAccent,
+                            borderRadius: BorderRadius.circular(10)),
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Text(
+                            date,
+                            style: const TextStyle(color: Colors.white),
+                          ),
+                        ),
+                      ),
+                      const SizedBox(
+                        width: 10,
+                      ),
+                      Container(
+                        decoration: BoxDecoration(
+                            color: Colors.blueAccent,
+                            borderRadius: BorderRadius.circular(10)),
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Text(
+                            location,
+                            style: const TextStyle(color: Colors.white),
+                          ),
+                        ),
                       ),
                     ],
                   ),
-                ),
+                )
               ],
             ),
           ),

@@ -1,17 +1,74 @@
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:codex/admin/views/adminpanel.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:firebase_storage/firebase_storage.dart';
+import 'package:random_string/random_string.dart';
 
 class AdminController extends GetxController {
+  FirebaseAuth firebaseAuth = FirebaseAuth.instance;
+  FirebaseFirestore firestore = FirebaseFirestore.instance;
+  FirebaseStorage storage = FirebaseStorage.instance;
+
+  GlobalKey<FormState> createNewEventKey = GlobalKey<FormState>();
+
   TextEditingController adminEmailController = TextEditingController();
   TextEditingController adminPasswordController = TextEditingController();
 
-  FirebaseAuth firebaseAuth = FirebaseAuth.instance;
-  FirebaseFirestore firestore = FirebaseFirestore.instance;
+  late TextEditingController eventNameController,
+      eventIntroController,
+      eventDateController,
+      eventTimingController,
+      eventTeamSizeController,
+      eventLocationController,
+      eventLDORController,
+      eventContactNumberOneController,
+      eventContactNumberTwoController,
+      eventRegisterationLinkController,
+      eventDescriptionController;
 
+  // New Event Details
+  var eventPoster = ''.obs;
+  var name = '';
+  var intro = '';
+  var date = '';
+  var timing = '';
+  var teamSize = '';
+  var location = '';
+  var ldor = '';
+  var contactNumberOne = '';
+  var contactNumberTwo = '';
+  var registrationLink = '';
+  var description = '';
+
+  @override
+  void onInit() {
+    super.onInit();
+    eventNameController = TextEditingController();
+    eventIntroController = TextEditingController();
+    eventDateController = TextEditingController();
+    eventTimingController = TextEditingController();
+    eventTeamSizeController = TextEditingController();
+    eventLocationController = TextEditingController();
+    eventLDORController = TextEditingController();
+    eventContactNumberOneController = TextEditingController();
+    eventContactNumberTwoController = TextEditingController();
+    eventRegisterationLinkController = TextEditingController();
+    eventDescriptionController = TextEditingController();
+  }
+
+  String? checkInputField(String value) {
+    if (value.isEmpty) {
+      return 'Please Fill This';
+    }
+    return null;
+  }
+
+  // Admin Login
   adminLogin() async {
     try {
       // ignore: unused_local_variable
@@ -49,6 +106,7 @@ class AdminController extends GetxController {
     }
   }
 
+  // Image Selection Code
   var selectedImagePath = ''.obs;
   void pickPosterImage() async {
     final pickedImage =
@@ -62,5 +120,70 @@ class AdminController extends GetxController {
             color: Colors.red,
           ));
     }
+  }
+
+  // Upload Image to cloud storage
+  Future<String> uploadEventPoster() async {
+    Reference ref = storage.ref().child('posters').child(name);
+    UploadTask uploadTask = ref.putFile(File(selectedImagePath.value));
+    TaskSnapshot snap = await uploadTask;
+    String downloadURL = await snap.ref.getDownloadURL();
+    eventPoster.value = downloadURL;
+    return eventPoster.value;
+  }
+
+  // Add new event data to DB
+  addNewEventDataToDB(
+      String name,
+      intro,
+      date,
+      timing,
+      teamSize,
+      location,
+      ldor,
+      contactNumber,
+      alternateContactNumber,
+      registrationLink,
+      description,
+      image) async {
+    firestore.collection('events').doc(randomString(10)).set({
+      'name': name,
+      'intro': intro,
+      'date': date,
+      'teamSize': teamSize,
+      'location': location,
+      'lastDateOfRegistration': ldor,
+      'contactNumberOne': contactNumber,
+      'contactNumberTwo': alternateContactNumber,
+      'registerLink': registrationLink,
+      'isPastEvent': false,
+      'image': image,
+      'description': description,
+      'timing': timing,
+    });
+  }
+
+  addNewEvent() async {
+    final isInputValid = createNewEventKey.currentState!.validate();
+    if (!isInputValid) {
+      return;
+    }
+    createNewEventKey.currentState!.save();
+    await uploadEventPoster();
+    await addNewEventDataToDB(
+        name,
+        intro,
+        date,
+        timing,
+        teamSize,
+        location,
+        ldor,
+        contactNumberOne,
+        contactNumberTwo,
+        registrationLink,
+        description,
+        eventPoster.value);
+    Get.snackbar('Success', 'Event Created');
+    Get.off(const AdminPanel());
   }
 }

@@ -71,9 +71,7 @@ class _HomePageState extends State<HomePage> {
         ),
       ),
       bottomNavigationBar: BottomNavigationBar(
-        backgroundColor: Colors.grey.shade200,
         selectedItemColor: Colors.blueAccent.shade400,
-        unselectedItemColor: Colors.grey.shade700,
         items: const [
           BottomNavigationBarItem(
             label: 'Events',

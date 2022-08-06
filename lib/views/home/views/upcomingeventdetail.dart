@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher_string.dart';
 
 class UpcomingEventDetail extends StatefulWidget {
   UpcomingEventDetail(
@@ -15,7 +16,8 @@ class UpcomingEventDetail extends StatefulWidget {
       required this.teamSize,
       required this.timing,
       required this.contactNumberOne,
-      required this.contactNumberTwo})
+      required this.contactNumberTwo,
+      required this.ldor})
       : super(key: key);
   String eventName;
   String image;
@@ -29,6 +31,7 @@ class UpcomingEventDetail extends StatefulWidget {
   String teamSize;
   String contactNumberOne;
   String contactNumberTwo;
+  String ldor;
 
   @override
   State<UpcomingEventDetail> createState() => _UpcomingEventDetailState();
@@ -73,107 +76,131 @@ class _UpcomingEventDetailState extends State<UpcomingEventDetail> {
                         ),
                       ),
                       Padding(
-                        padding: EdgeInsets.all(_size.width / 100),
+                        padding: EdgeInsets.only(top: _size.height / 50),
                         child: Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Text(
                               widget.eventName,
                               style: const TextStyle(
-                                  fontSize: 30, fontWeight: FontWeight.bold),
+                                  fontSize: 40, fontWeight: FontWeight.bold),
                             ),
                           ],
                         ),
                       ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          const Icon(
+                            Icons.location_on,
+                            color: Colors.grey,
+                          ),
+                          const SizedBox(
+                            width: 5,
+                          ),
+                          Text(
+                            widget.location,
+                            style: const TextStyle(color: Colors.grey),
+                          )
+                        ],
+                      ),
                       Padding(
-                        padding: EdgeInsets.all(_size.width / 100),
+                        padding: EdgeInsets.only(top: _size.width / 20),
                         child: Text(
                           widget.description,
-                          style: const TextStyle(fontSize: 15),
+                          textAlign: TextAlign.center,
                         ),
                       ),
-                      Padding(
-                        padding: EdgeInsets.all(_size.width / 100),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            const Text(
-                              'Team Size: - ',
-                              style: TextStyle(
-                                  fontSize: 23, fontWeight: FontWeight.bold),
-                            ),
-                            Text(
-                              widget.teamSize,
-                              style: const TextStyle(fontSize: 18),
-                            ),
-                          ],
-                        ),
+                      SizedBox(
+                        height: _size.width / 20,
                       ),
-                      Padding(
-                        padding: EdgeInsets.all(_size.width / 100),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            const Text(
-                              'Date: - ',
-                              style: TextStyle(
-                                  fontSize: 23, fontWeight: FontWeight.bold),
-                            ),
-                            Text(
-                              widget.date,
-                              style: const TextStyle(fontSize: 18),
-                            ),
-                          ],
-                        ),
-                      ),
-                      Padding(
-                        padding: EdgeInsets.all(_size.width / 100),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            const Text(
-                              'Timing: - ',
-                              style: TextStyle(
-                                  fontSize: 23, fontWeight: FontWeight.bold),
-                            ),
-                            Text(
-                              widget.timing,
-                              style: const TextStyle(fontSize: 18),
-                            ),
-                          ],
-                        ),
-                      ),
-                      Padding(
-                        padding: EdgeInsets.all(_size.width / 100),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            const Text(
-                              'Location: - ',
-                              style: TextStyle(
-                                  fontSize: 23, fontWeight: FontWeight.bold),
-                            ),
-                            Text(
-                              widget.location,
-                              style: const TextStyle(fontSize: 18),
-                            ),
-                          ],
-                        ),
-                      ),
-                      Padding(
-                        padding: EdgeInsets.all(_size.width / 100),
-                        child: SizedBox(
-                          width: _size.width,
-                          height: _size.height / 15,
-                          child: ElevatedButton(
-                            onPressed: () {},
-                            child: const Text(
-                              'Register Now',
-                              style: TextStyle(
-                                  fontSize: 23, fontWeight: FontWeight.bold),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          InkWell(
+                            onTap: () {
+                              showModalBottomSheet(
+                                  context: context,
+                                  builder: (context) {
+                                    return Wrap(
+                                      children: [
+                                        ListTile(
+                                          title: const Text('Date'),
+                                          subtitle: Text(widget.date),
+                                        ),
+                                        ListTile(
+                                          title: const Text('Location'),
+                                          subtitle: Text(widget.location),
+                                        ),
+                                        ListTile(
+                                          title: const Text('Timing'),
+                                          subtitle: Text(widget.timing),
+                                        ),
+                                        ListTile(
+                                          title: const Text('Team Size'),
+                                          subtitle: Text(widget.teamSize),
+                                        ),
+                                        ListTile(
+                                          title: const Text(
+                                              'Last Date of Registration'),
+                                          subtitle: Text(widget.ldor),
+                                        ),
+                                        ListTile(
+                                          title: const Text('Contact Details'),
+                                          subtitle: Text(
+                                              widget.contactNumberOne +
+                                                  ' or ' +
+                                                  widget.contactNumberTwo),
+                                        ),
+                                      ],
+                                    );
+                                  });
+                            },
+                            child: Container(
+                              width: _size.width / 2.5,
+                              height: _size.width / 7,
+                              decoration: BoxDecoration(
+                                  color: Colors.orange.shade900,
+                                  borderRadius: BorderRadius.circular(10)),
+                              child: const Center(
+                                child: Text(
+                                  'Event Details',
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 20,
+                                  ),
+                                ),
+                              ),
                             ),
                           ),
-                        ),
+                          const SizedBox(
+                            width: 10,
+                          ),
+                          InkWell(
+                            onTap: () async {
+                              launchUrlString(widget.registerLink);
+                            },
+                            child: Container(
+                              width: _size.width / 2.5,
+                              height: _size.width / 7,
+                              decoration: BoxDecoration(
+                                  color: Colors.blueAccent,
+                                  borderRadius: BorderRadius.circular(10)),
+                              child: const Center(
+                                child: Text(
+                                  'Register Now',
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 20,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                      SizedBox(
+                        height: _size.width / 20,
                       )
                     ],
                   ),
