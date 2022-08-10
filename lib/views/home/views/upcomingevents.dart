@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:codex/views/home/views/upcomingeventdetail.dart';
 import 'package:flutter/material.dart';
@@ -139,14 +140,20 @@ class UpcomingEventWidget extends StatelessWidget {
                         height: _size.height / 2.5,
                         width: double.infinity,
                         decoration: BoxDecoration(
-                            border:
-                                Border.all(color: Color(0xff377D71), width: 2),
+                            border: Border.all(
+                                color: const Color(0xff377D71), width: 2),
                             borderRadius: BorderRadius.circular(3)),
                         child: Padding(
                           padding: const EdgeInsets.all(3.0),
-                          child: Image.network(
-                            image,
+                          // child: Image.network(
+                          //   image,
+                          //   fit: BoxFit.fill,
+                          // ),
+                          child: CachedNetworkImage(
+                            imageUrl: image,
                             fit: BoxFit.fill,
+                            placeholder: (context, url) =>
+                                Image.asset('assets/images/loadingBar.gif'),
                           ),
                         ),
                       ),
