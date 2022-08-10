@@ -2,7 +2,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:codex/views/home/views/upcomingeventdetail.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:cached_network_image/cached_network_image.dart';
 
 class UpcomingEvents extends StatefulWidget {
   const UpcomingEvents({Key? key}) : super(key: key);
@@ -16,6 +15,7 @@ class _UpcomingEventsState extends State<UpcomingEvents> {
   Widget build(BuildContext context) {
     final _size = MediaQuery.of(context).size;
     return Scaffold(
+      backgroundColor: Colors.white,
       body: StreamBuilder<QuerySnapshot>(
         stream: FirebaseFirestore.instance.collection('events').snapshots(),
         builder: (context, snapshot) {
@@ -45,8 +45,12 @@ class _UpcomingEventsState extends State<UpcomingEvents> {
               },
             );
           }
-          return const Center(
-            child: Text('No Data'),
+
+          return Center(
+            child: Image.asset(
+              'assets/images/loadingBar.gif',
+              width: 140,
+            ),
           );
         },
       ),
@@ -54,6 +58,7 @@ class _UpcomingEventsState extends State<UpcomingEvents> {
   }
 }
 
+// ignore: must_be_immutable
 class UpcomingEventWidget extends StatelessWidget {
   UpcomingEventWidget(
       {Key? key,
@@ -98,97 +103,118 @@ class UpcomingEventWidget extends StatelessWidget {
           top: _size.height / 120),
       child: Column(
         children: [
-          SizedBox(
+          Container(
             width: _size.width,
-            // decoration: BoxDecoration(
-            //     borderRadius: BorderRadius.circular(6),
-            //     border: Border.all(color: Colors.grey.shade400)),
-            child: Column(
-              children: [
-                ClipRRect(
-                  borderRadius: BorderRadius.circular(6),
-                  child: InkWell(
-                    onTap: () {
-                      Get.to(UpcomingEventDetail(
-                        eventName: eventName,
-                        date: date,
-                        description: description,
-                        image: image,
-                        intro: intro,
-                        isPastEvent: isPastEvent,
-                        location: location,
-                        registerLink: registerLink,
-                        teamSize: teamSize,
-                        timing: timing,
-                        contactNumberOne: contactNumberOne,
-                        contactNumberTwo: contactNumberTwo,
-                        ldor: ldor,
-                      ));
-                    },
-                    child: CachedNetworkImage(
-                      imageUrl: image,
-                      placeholder: (context, url) =>
-                          const CircularProgressIndicator(),
-                      errorWidget: (context, url, error) =>
-                          const Icon(Icons.error),
-                    ),
-                  ),
-                ),
-                Padding(
-                  padding: EdgeInsets.all(_size.width / 100),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      Text(
-                        eventName,
-                        style: const TextStyle(
-                            fontSize: 30, fontWeight: FontWeight.bold),
-                      ),
-                    ],
-                  ),
-                ),
-                Padding(
-                  padding: EdgeInsets.all(_size.width / 100),
-                  child: Text(
-                    intro,
-                    style: const TextStyle(fontSize: 15),
-                  ),
-                ),
-                Padding(
-                  padding: EdgeInsets.all(_size.width / 100),
-                  child: Row(
-                    children: [
-                      Container(
-                        decoration: BoxDecoration(
-                            color: Colors.blueAccent,
-                            borderRadius: BorderRadius.circular(10)),
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Text(
-                            date,
-                            style: const TextStyle(color: Colors.white),
-                          ),
-                        ),
-                      ),
-                      const SizedBox(
-                        width: 10,
-                      ),
-                      Container(
-                        decoration: BoxDecoration(
-                            color: Colors.blueAccent,
-                            borderRadius: BorderRadius.circular(10)),
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Text(
-                            location,
-                            style: const TextStyle(color: Colors.white),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                )
+            decoration: BoxDecoration(
+              boxShadow: [
+                BoxShadow(color: Colors.grey.shade500, blurRadius: 10)
               ],
+              borderRadius: BorderRadius.circular(5),
+            ),
+            child: InkWell(
+              onTap: () {
+                Get.to(UpcomingEventDetail(
+                  eventName: eventName,
+                  date: date,
+                  description: description,
+                  image: image,
+                  intro: intro,
+                  isPastEvent: isPastEvent,
+                  location: location,
+                  registerLink: registerLink,
+                  teamSize: teamSize,
+                  timing: timing,
+                  contactNumberOne: contactNumberOne,
+                  contactNumberTwo: contactNumberTwo,
+                  ldor: ldor,
+                ));
+              },
+              child: Card(
+                // color: Color(0xffd8f2ee),
+                child: Padding(
+                  padding: const EdgeInsets.all(10.0),
+                  child: Column(
+                    children: [
+                      Container(
+                        height: _size.height / 2.5,
+                        width: double.infinity,
+                        decoration: BoxDecoration(
+                            border:
+                                Border.all(color: Color(0xff377D71), width: 2),
+                            borderRadius: BorderRadius.circular(3)),
+                        child: Padding(
+                          padding: const EdgeInsets.all(3.0),
+                          child: Image.network(
+                            image,
+                            fit: BoxFit.fill,
+                          ),
+                        ),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.all(_size.width / 100),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            Text(
+                              eventName,
+                              style: const TextStyle(
+                                  fontSize: 30, fontWeight: FontWeight.bold),
+                            ),
+                          ],
+                        ),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.all(_size.width / 100),
+                        child: Text(
+                          intro,
+                          textAlign: TextAlign.justify,
+                          style: const TextStyle(fontSize: 15),
+                        ),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.only(
+                            top: _size.width / 30, bottom: _size.width / 30),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Container(
+                              width: _size.width / 2.35,
+                              decoration: BoxDecoration(
+                                  color: const Color(0xff377D71),
+                                  borderRadius: BorderRadius.circular(10)),
+                              child: Padding(
+                                padding: const EdgeInsets.all(15),
+                                child: Center(
+                                  child: Text(
+                                    date,
+                                    style: const TextStyle(color: Colors.white),
+                                  ),
+                                ),
+                              ),
+                            ),
+                            Container(
+                              width: _size.width / 2.35,
+                              decoration: BoxDecoration(
+                                  color: const Color(0xff377D71),
+                                  borderRadius: BorderRadius.circular(10)),
+                              child: Padding(
+                                padding: const EdgeInsets.all(15),
+                                child: Center(
+                                  child: Text(
+                                    location,
+                                    textAlign: TextAlign.center,
+                                    style: const TextStyle(color: Colors.white),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      )
+                    ],
+                  ),
+                ),
+              ),
             ),
           ),
         ],

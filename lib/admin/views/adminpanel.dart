@@ -1,4 +1,6 @@
 import 'package:codex/admin/views/createNewEvent.dart';
+import 'package:codex/admin/views/manageevents.dart';
+import 'package:codex/admin/views/manageusers.dart';
 import 'package:codex/views/home/views/homepage.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -71,7 +73,9 @@ class _AdminPanelState extends State<AdminPanel> {
                         color: Colors.cyan,
                         borderRadius: BorderRadius.circular(5)),
                     child: InkWell(
-                      onTap: () {},
+                      onTap: () {
+                        Get.to(const ManageEvents());
+                      },
                       child: const Center(
                         child: Text(
                           'Manage Events',
@@ -119,7 +123,9 @@ class _AdminPanelState extends State<AdminPanel> {
                         color: Colors.cyan,
                         borderRadius: BorderRadius.circular(5)),
                     child: InkWell(
-                      onTap: () {},
+                      onTap: () {
+                        Get.to(const ManageUsers());
+                      },
                       child: const Center(
                         child: Text(
                           'Users Management',

@@ -22,7 +22,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
-      theme: ThemeData(textTheme: GoogleFonts.jostTextTheme()),
+      theme: ThemeData(textTheme: GoogleFonts.poppinsTextTheme()),
       getPages: [
         GetPage(name: '/splash', page: () => const SplashScreen()),
         GetPage(name: '/register', page: () => const AuthenticationScreen()),

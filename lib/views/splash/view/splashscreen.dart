@@ -1,16 +1,33 @@
+import 'dart:async';
 import 'package:codex/views/splash/controller/splashcontroller.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class SplashScreen extends StatelessWidget {
+class SplashScreen extends StatefulWidget {
   const SplashScreen({Key? key}) : super(key: key);
+
+  @override
+  State<SplashScreen> createState() => _SplashScreenState();
+}
+
+class _SplashScreenState extends State<SplashScreen> {
+  final splashController = Get.put(SplashController());
+  @override
+  void initState() {
+    super.initState();
+    setScreen();
+  }
+
+  setScreen() async {
+    Timer(const Duration(seconds: 2), () {
+      splashController.setScreen(FirebaseAuth.instance.currentUser);
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     final _size = MediaQuery.of(context).size;
-    final splashScreenController = Get.put(SplashController());
-
     return Scaffold(
       backgroundColor: Colors.white,
       body: SingleChildScrollView(
@@ -21,12 +38,12 @@ class SplashScreen extends StatelessWidget {
           child: Column(
             children: [
               Padding(
-                padding: EdgeInsets.only(top: _size.height / 8),
+                padding: EdgeInsets.only(top: _size.height / 5),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Image.asset(
-                      'assets/images/splashLogo.png',
+                      'assets/images/splashLogoTwo.png',
                       width: _size.width,
                     )
                   ],
@@ -41,34 +58,16 @@ class SplashScreen extends StatelessWidget {
                 style: TextStyle(fontSize: 25),
               ),
               Padding(
-                padding: EdgeInsets.only(top: _size.height / 3),
-                child: InkWell(
-                  onTap: () {
-                    splashScreenController
-                        .setScreen(FirebaseAuth.instance.currentUser);
-                  },
-                  child: Container(
-                    width: _size.width / 2.5,
-                    height: _size.height / 15,
-                    decoration: BoxDecoration(
-                        color: Colors.blueAccent.shade400,
-                        borderRadius: BorderRadius.circular(6)),
-                    child: const Center(
-                      child: Text(
-                        'Continue',
-                        style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 21,
-                            fontWeight: FontWeight.w600),
-                      ),
-                    ),
-                  ),
+                padding: EdgeInsets.only(top: _size.height / 6),
+                child: Image.asset(
+                  'assets/images/loadingBar.gif',
+                  width: 120,
                 ),
               ),
               Padding(
                 padding: EdgeInsets.only(top: _size.height / 60),
                 child: Text(
-                  'Developed With ❤️ By Sushant',
+                  '© Copyright CODEx 2022',
                   style: TextStyle(color: Colors.grey.shade700, fontSize: 18),
                 ),
               )

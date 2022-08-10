@@ -18,6 +18,7 @@ class _HomePageState extends State<HomePage> {
     final homeController = Get.put(HomeController());
     final _size = MediaQuery.of(context).size;
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(
         iconTheme: const IconThemeData(color: Colors.black),
         backgroundColor: Colors.grey.shade100,
@@ -32,7 +33,7 @@ class _HomePageState extends State<HomePage> {
           IconButton(
               onPressed: () {},
               icon: const Icon(
-                Icons.notifications_outlined,
+                Icons.logout,
                 color: Colors.black,
               )),
         ],
@@ -71,7 +72,7 @@ class _HomePageState extends State<HomePage> {
         ),
       ),
       bottomNavigationBar: BottomNavigationBar(
-        selectedItemColor: Colors.blueAccent.shade400,
+        selectedItemColor: const Color(0xff377D71),
         items: const [
           BottomNavigationBarItem(
             label: 'Events',

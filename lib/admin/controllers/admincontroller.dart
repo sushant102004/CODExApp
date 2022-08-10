@@ -74,7 +74,6 @@ class AdminController extends GetxController {
       // ignore: unused_local_variable
       final credential = await FirebaseAuth.instance.signInWithEmailAndPassword(
           email: 'admin@admin.com', password: adminPasswordController.text);
-
       Get.off(const AdminPanel());
     } on FirebaseException catch (e) {
       if (e.code == 'user-not-found') {
@@ -152,7 +151,7 @@ class AdminController extends GetxController {
       'date': date,
       'teamSize': teamSize,
       'location': location,
-      'lastDateOfRegistration': ldor,
+      'ldor': ldor,
       'contactNumberOne': contactNumber,
       'contactNumberTwo': alternateContactNumber,
       'registerLink': registrationLink,
