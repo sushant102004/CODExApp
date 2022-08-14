@@ -1,6 +1,8 @@
 import 'package:codex/admin/controllers/admincontroller.dart';
 import 'package:codex/admin/views/adminlogin.dart';
 import 'package:codex/views/home/controllers/homecontroller.dart';
+import 'package:codex/views/home/views/pastevents.dart';
+import 'package:codex/views/home/views/profile.dart';
 import 'package:codex/views/home/views/upcomingevents.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -13,6 +15,20 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  int selectedIndex = 0;
+
+  final List _pages = const [
+    UpcomingEvents(),
+    PastEvents(),
+    Profile(),
+  ];
+
+  void onItemSelect(int index) {
+    setState(() {
+      selectedIndex = index;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     final homeController = Get.put(HomeController());
@@ -87,8 +103,9 @@ class _HomePageState extends State<HomePage> {
             icon: Icon(Icons.person_outline),
           ),
         ],
+        onTap: onItemSelect,
       ),
-      body: const UpcomingEvents(),
+      body: _pages.elementAt(selectedIndex),
     );
   }
 }
